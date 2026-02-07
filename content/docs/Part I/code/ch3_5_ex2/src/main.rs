@@ -23,25 +23,29 @@ fn precision_recall_f1(y_true: &Tensor, y_pred: &Tensor, threshold: f64) -> (f64
     println!("[DEBUG] y_true    sum (num actual positive):     {:.1}", y_true.sum(Kind::Float).double_value(&[]));
 
     // TP: predicted positive AND actually positive
-    let true_positive = pred_class.eq_tensor(&one)
+    let true_positive = pred_class
+        .eq_tensor(&one)
         .logical_and(&y_true.eq_tensor(&one))
         .to_kind(Kind::Float)
         .sum(Kind::Float);
 
     // FP: predicted positive AND actually negative
-    let false_positive = pred_class.eq_tensor(&one)
+    let false_positive = pred_class
+        .eq_tensor(&one)
         .logical_and(&y_true.eq_tensor(&zero))
         .to_kind(Kind::Float)
         .sum(Kind::Float);
 
     // FN: predicted negative AND actually positive
-    let false_negative = pred_class.eq_tensor(&zero)
+    let false_negative = pred_class
+        .eq_tensor(&zero)
         .logical_and(&y_true.eq_tensor(&one))
         .to_kind(Kind::Float)
         .sum(Kind::Float);
 
     // TN: predicted negative AND actually negative
-    let true_negative = pred_class.eq_tensor(&zero)
+    let true_negative = pred_class
+        .eq_tensor(&zero)
         .logical_and(&y_true.eq_tensor(&zero))
         .to_kind(Kind::Float)
         .sum(Kind::Float);
@@ -92,6 +96,13 @@ fn main() {
 
     let xs = Tensor::randn(&[100, 3], (Kind::Float, device));
     let ys = Tensor::randint(2, &[100, 1], (Kind::Float, device));
+
+    println!("[DEBUG] ys:");
+    for i in 0..ys.size()[0] {
+        //println!("\t{}: {:.1}", i, ys.double_value(&[i, 0]));
+        print!("{:.1}, ", ys.double_value(&[i,0]));
+    }
+    println!(" ");
 
     println!("[DEBUG] xs shape: {:?}, kind: {:?}", xs.size(), xs.kind());
     println!("[DEBUG] ys shape: {:?}, kind: {:?}", ys.size(), ys.kind());
