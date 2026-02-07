@@ -1,0 +1,13 @@
+HOME := "/home/aaelony"
+LIBTORCH := HOME + "/aa/libtorch"
+LIBTORCH_INCLUDE := LIBTORCH + "/include"
+LIBTORCH_LIB := LIBTORCH + "/lib"
+
+# Do NOT set LIBTORCH_USE_PYTORCH — any value (even "0") triggers the Python/PyTorch path
+export LIBTORCH_CXX11_ABI := "1"
+
+help:
+    @just --list
+
+run:
+    LIBTORCH={{LIBTORCH}} LD_LIBRARY_PATH={{LIBTORCH_LIB}} cargo run
