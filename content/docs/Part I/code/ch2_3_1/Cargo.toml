@@ -1,0 +1,11 @@
+[package]
+name = "ch2_3_1"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+nalgebra = "0.33.2"
+ndarray = "0.16.1"
+rand = "0.8.5"
+rand_distr = "0.4.3"
+statrs = "0.17.1"
